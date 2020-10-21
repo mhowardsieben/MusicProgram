@@ -11,12 +11,13 @@ int numberOfSongs = 3;
 AudioPlayer[] song = new AudioPlayer[numberOfSongs];
 AudioMetaData[] songMetaData = new AudioMetaData[numberOfSongs];
 int currentSong = 0;
+int nextSong = 1;
 int loopNum = 1;
-
 color white = #FFFFFF;
+float playButtonX, playButtonY, playButtonWidth, playButtonHeight;
 
 void setup() {
-  size(500, 600);
+  size(1920, 1080);
   minim = new Minim(this);
   song[0] = minim.loadFile("Mess Call - USAF Heritage of America Band .mp3");
   song[1] = minim.loadFile("The_Sleeping_Prophet.mp3");
@@ -24,13 +25,19 @@ void setup() {
   songMetaData[0] = song[0].getMetaData();
   songMetaData[1] = song[1].getMetaData();
   songMetaData[2] = song[2].getMetaData();
+  for(int i=0; i<song.length; i++) {
+    songMetaData[i] = song[i].getMetaData();
+  }
   //
   println("Start of Console");
   println("Click the Canvas to finish starting App");
   println("Press 1, 2, or 3 respectively to play a song");
   println("Press P to Pause");
   println("Press S to Stop and Rewind");
+  println("Press F to Fast Forward and R to Rewind");
+  println("Press L to Loop");
   //
+  println("\n\nVerifying MetaData");
   println("File Name:", songMetaData[currentSong].fileName() );
   println("Song Length (in milliseconds) :", songMetaData[currentSong].length() );
   println("Song Length (in Seconds :", songMetaData[currentSong].length() );
@@ -47,67 +54,52 @@ void setup() {
   println("Lyrics:", songMetaData[currentSong].lyrics() );
   println("Track:", songMetaData[currentSong].track() );
   println("Genre:", songMetaData[currentSong].genre() );
-  println("Encoded:", songMetaData[currentSong].encode() );
-  println(":", songMetaData[currentSong].);
-  
+  println("Encoded:", songMetaData[currentSong].encoded() );
+  //
+  playButtonX = width*2/16;
+  playButtonY = height*13/16;
+  playButtonWidth = width*2/16;
+  playButtonHeight = height*2/16;
 }
 
 void draw() {
-  
+  background(white);
+  fill(0);
+  rect(playButtonX, playButtonY, playButtonWidth, playButtonHeight);
 }
 
 void keyPressed() { 
   if (key == '1' || key == '!') {
-    song[0].play();
+    song[currentSong].play();
   }
   //
   if (key == 'p' || key =='P'){
-    song[0].pause();
+    song[currentSong].pause();
   }
   //
-  if ( song[0].position() == song[0].length() ) {
-    song[1].play();
-  }
-  //
-  if (key == 's' || key == 'S') {
-    song[0].pause();
-    song[0].rewind();
-  }
-  //
-  if (key == '2' || key == '2') {
-    song[1].play();
-  }
-  //
-  if (key == 'p' || key =='P'){
-    song[1].pause();
-  }
-  //
-  if ( song[1].position() == song[1].length() ) {
-    song[2].play();
+  if ( song[currentSong].position() == song[currentSong].length() ) {
+    song[nextSong].play();
   }
   //
   if (key == 's' || key == 'S') {
-    song[1].pause();
-    song[1].rewind();
-  }
-    if (key == '3' || key == '3') {
-    song[2].play();
+    song[currentSong].pause();
+    song[currentSong].rewind();
   }
   //
-  if (key == 'p' || key =='P'){
-    song[2].pause();
-  }
-  //
-  if ( song[2].position() == song[2].length() ) {
-    song[0].play();
-  }
-  //
-  if (key == 's' || key == 'S') {
-    song[2].pause();
-    song[2].rewind();
-  }
+  if(key == 'f' || key == 'F') song[currentSong].skip(5000);
+  if(key == 'r' || key == 'R') song[currentSong].skip(-5000);
+  if ( key == 'l' || key == 'L' ) song[currentSong].loop(loopNum);
 }
 
 void mousePressed() {
-  
+  if (mouseX>playButtonX && mouseX<playButtonX+playButtonWidth && mouseY>playButtonY && mouseY<playButtonY+playButtonHeight ) {
+    if ( song[currentSong].isPlaying() ) {
+      song[0].pause();
+    } else if (song[currentSong].position() == song[currentSong].length()) {
+      song[currentSong].rewind();
+      song[currentSong].play();
+    } else {
+      song[currentSong].play();
+    }
+  }
 }
