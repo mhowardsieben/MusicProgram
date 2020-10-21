@@ -15,6 +15,8 @@ int nextSong = 1;
 int loopNum = 1;
 color white = #FFFFFF;
 float playButtonX, playButtonY, playButtonWidth, playButtonHeight;
+PFont titleFont;
+color grey = #99A3A4;
 
 void setup() {
   size(1920, 1080);
@@ -60,12 +62,19 @@ void setup() {
   playButtonY = height*13/16;
   playButtonWidth = width*2/16;
   playButtonHeight = height*2/16;
+  //
+  titleFont = createFont ("Centaur", 48);
 }
 
 void draw() {
   background(white);
-  fill(0);
+  fill(grey);
   rect(playButtonX, playButtonY, playButtonWidth, playButtonHeight);
+  //
+  fill(0);
+  textAlign (CENTER, CENTER);
+  textFont(titleFont, 50);
+  text("Play/Pause", width*2/16, height*13/16, width*2/16, height*2/16);
 }
 
 void keyPressed() { 
