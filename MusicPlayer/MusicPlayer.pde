@@ -7,7 +7,7 @@ import ddf.minim.ugens.*;
 
 //Global Variables
 Minim minim;
-int numberOfSongs = 3;
+int numberOfSongs = 4;
 AudioPlayer[] song = new AudioPlayer[numberOfSongs];
 AudioMetaData[] songMetaData = new AudioMetaData[numberOfSongs];
 int currentSong = 0;
@@ -40,6 +40,7 @@ void setup() {
   song[0] = minim.loadFile("Mess Call - USAF Heritage of America Band .mp3");
   song[1] = minim.loadFile("The_Sleeping_Prophet.mp3");
   song[2] = minim.loadFile("Forget Me Not - Patrick Patrikios.mp3");
+  song[3] = minim.loadFile("Pen Clicking .mp3");
   songMetaData[0] = song[0].getMetaData();
   songMetaData[1] = song[1].getMetaData();
   songMetaData[2] = song[2].getMetaData();
@@ -221,6 +222,8 @@ void keyPressed() {
 
 void mousePressed() {
   if (mouseX>playButtonX && mouseX<playButtonX+playButtonWidth && mouseY>playButtonY && mouseY<playButtonY+playButtonHeight ) {
+    song[3].play();
+    song[3].rewind();
     if ( song[currentSong].isPlaying() ) {
       song[0].pause();
     } else if (song[currentSong].position() == song[currentSong].length()) {
@@ -231,16 +234,24 @@ void mousePressed() {
     }
   }
   if (mouseX>playButtonX2 && mouseX<playButtonX2+playButtonWidth2 && mouseY>playButtonY2 && mouseY<playButtonY2+playButtonHeight2 ) {
+    song[3].play();
+    song[3].rewind();
     song[currentSong].pause();
     song[currentSong].rewind();
   }
   if (mouseX>playButtonX3 && mouseX<playButtonX3+playButtonWidth3 && mouseY>playButtonY3 && mouseY<playButtonY3+playButtonHeight3 ) {
+    song[3].play();
+    song[3].rewind();
     song[currentSong].skip(-5000);
   }
   if (mouseX>playButtonX4 && mouseX<playButtonX4+playButtonWidth4 && mouseY>playButtonY4 && mouseY<playButtonY4+playButtonHeight4 ) {
+    song[3].play();
+    song[3].rewind();
     song[currentSong].skip(5000);
   }
   if (mouseX>playButtonX5 && mouseX<playButtonX5+playButtonWidth5 && mouseY>playButtonY5 && mouseY<playButtonY5+playButtonHeight5 ) {
+    song[3].play();
+    song[3].rewind();
     if ( currentSong == 0 ) {
       song[currentSong].pause();
       song[currentSong].rewind();
@@ -261,24 +272,34 @@ void mousePressed() {
     }
   }
   if (mouseX>playButtonX6 && mouseX<playButtonX6+playButtonWidth6 && mouseY>playButtonY6 && mouseY<playButtonY6+playButtonHeight6 ) {
-    song[currentSong].loop(loopNum);
+    song[3].play();
+    song[3].rewind();
+    song[currentSong].loop(100);
   }
   if (mouseX>quitX && mouseX<quitX+quitWidth && mouseY>quitY && mouseY<quitY+quitHeight ) {
+    song[3].play();
+    song[3].rewind();
     {exit();}
   }
   if (mouseX>songButtonX && mouseX<songButtonX+songButtonWidth && mouseY>songButtonY && mouseY<songButtonY+songButtonHeight ) {
+    song[3].play();
+    song[3].rewind();
     song[currentSong].pause();
     song[currentSong].rewind();
     currentSong = 0;
     song[currentSong].play();
   }
   if (mouseX>songButtonX2 && mouseX<songButtonX2+songButtonWidth2 && mouseY>songButtonY2 && mouseY<songButtonY2+songButtonHeight2 ) {
+    song[3].play();
+    song[3].rewind();
     song[currentSong].pause();
     song[currentSong].rewind();
     currentSong = 1;
     song[currentSong].play();
   }
   if (mouseX>songButtonX3 && mouseX<songButtonX3+songButtonWidth3 && mouseY>songButtonY3 && mouseY<songButtonY3+songButtonHeight3 ) {
+   song[3].play();
+   song[3].rewind();
    song[currentSong].pause();
    song[currentSong].rewind();
    currentSong = 2;
